@@ -6,13 +6,13 @@
 # This .gitignore file should be placed at the root of your Unity project directory
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
-Meta/[Ll]ibrary/*
-Meta/[Tt]emp/*
-Meta/[Oo]bj/*
-Meta/[Bb]uild/*
-Meta/[Bb]uilds/*
-Meta/[Ll]ogs/*
-Meta/[Mm]emoryCaptures/*
+MGame/[Ll]ibrary/*
+MGame/[Tt]emp/*
+MGame/[Oo]bj/*
+MGame/[Bb]uild/*
+MGame/[Bb]uilds/*
+MGame/[Ll]ogs/*
+MGame/[Mm]emoryCaptures/*
 
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
@@ -63,5 +63,5 @@ crashlytics-build.properties
 
 
 # End of https://www.gitignore.io/api/unity
-Meta/Temp/UnityLockfile
+MGame/Temp/UnityLockfile
 

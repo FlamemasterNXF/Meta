@@ -14,7 +14,6 @@ public class SaveData
     public List<Generator> genList;
     public Generator genObj;
     public int genCap;
-        //test
     #endregion
     
     public SaveData()

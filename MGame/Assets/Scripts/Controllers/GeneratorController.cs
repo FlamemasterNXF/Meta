@@ -14,7 +14,8 @@ public class GeneratorController : MonoBehaviour
     public TMP_Text layerAndCurrencyText;
     public TMP_Text mainGenInfoText;
     public TMP_Text secondGenInfoText;
-    private int CurrentGenID = 1;
+    private int CurrentDisplayGenID = 1; 
+    private int CurrentGenID => CurrentDisplayGenID - 1;
 
     private void Start()
     {
@@ -24,24 +25,22 @@ public class GeneratorController : MonoBehaviour
 
     private void Update()
     {
-        layerAndCurrencyText.text = $"You are in<size=50><color=purple> Meta Layer 0</color></size>\n<size=40><color=yellow>You are in Prestige Layer 0</color></size>\n\n<size=50><color=orange>You have {Methods.NotationMethodBd(data.currency)} WIP Coin</color></size>";
+        layerAndCurrencyText.text = $"<size=40><color=yellow>You are in Prestige Layer 0</color></size>\n\n<size=50><color=orange>You have {Methods.NotationMethodBd(data.currency)} WIP Coin</color></size>";
         data.currency += (50 *data.genList[0].generatorAmount) * Time.deltaTime;
     }
 
     private void UpdateTexts()
     {
         CreateGenerators();
-        if(data.genList[CurrentGenID].generatorsBought >= 5)
-            CurrentGenID++;
-        layerAndCurrencyText.text = $"You are in<size=50><color=purple> Meta Layer 0</color></size>\n<size=40><color=yellow>You are in Prestige Layer 0</color></size>\n\n<size=50><color=orange>You have {data.currency} WIP Coin</color></size>";
-        if (CurrentGenID >= 2)
+        layerAndCurrencyText.text = $"<size=40><color=yellow>You are in Prestige Layer 0</color></size>\n\n<size=50><color=orange>You have {data.currency} WIP Coin</color></size>";
+        if (CurrentDisplayGenID >= 2)
         {
-            mainGenInfoText.text = $"You have<size=40> {Methods.NotationMethodBd(data.genList[CurrentGenID].generatorAmount)} Generator {CurrentGenID}s</size>\nCost: <size=30>{Methods.NotationMethodBd(data.genList[CurrentGenID].generatorCost)} WIP Coin</size>\nYour Generator {Methods.NotationMethodBd(data.genList[CurrentGenID].generatorID)}s produce<size=30> 0 Generator {Methods.NotationMethodBd(data.genList[CurrentGenID - 1].generatorID)}s per second</size>";
-            secondGenInfoText.text = $"You have<size=40> {Methods.NotationMethodBd(data.genList[CurrentGenID - 1].generatorAmount)} Generator {(CurrentGenID - 1)}s</size>\nCost: <size=30>{Methods.NotationMethodBd(data.genList[CurrentGenID - 1].generatorCost)} WIP Coin</size>";
+            mainGenInfoText.text = $"You have<size=40> {Methods.NotationMethodBd(data.genList[CurrentDisplayGenID].generatorAmount)} Generator {CurrentDisplayGenID}s</size>\nCost: <size=30>{Methods.NotationMethodBd(data.genList[CurrentDisplayGenID].generatorCost)} WIP Coin</size>\nYour Generator {Methods.NotationMethodBd(CurrentDisplayGenID)}s produce<size=30> 0 Generator {Methods.NotationMethodBd(CurrentDisplayGenID - 1)}s per second</size>";
+            secondGenInfoText.text = $"You have<size=40> {Methods.NotationMethodBd(data.genList[CurrentDisplayGenID - 1].generatorAmount)} Generator {(CurrentDisplayGenID - 1)}s</size>\nCost: <size=30>{Methods.NotationMethodBd(data.genList[CurrentDisplayGenID - 1].generatorCost)} WIP Coin</size>";
         }
         else
         {
-            mainGenInfoText.text = $"You have<size=40> {Methods.NotationMethodBd(data.genList[CurrentGenID].generatorAmount)} Generator {CurrentGenID}s</size>\nCost: <size=30>{Methods.NotationMethodBd(data.genList[CurrentGenID].generatorCost)} WIP Coin</size>";
+            mainGenInfoText.text = $"You have<size=40> {Methods.NotationMethodBd(data.genList[CurrentDisplayGenID].generatorAmount)} Generator {CurrentDisplayGenID}s</size>\nCost: <size=30>{Methods.NotationMethodBd(data.genList[CurrentDisplayGenID].generatorCost)} WIP Coin</size>";
             secondGenInfoText.text = "There are no previous Generators";
         }
     }
@@ -70,15 +69,19 @@ public class GeneratorController : MonoBehaviour
 
     public void BuyGenerator()
     {
-        if (data.currency >= data.genList[CurrentGenID-1].generatorCost)
+        if (data.currency >= data.genList[CurrentGenID].generatorCost)
         {
-            data.currency -= data.genList[CurrentGenID-1].generatorCost;
-            data.genList[CurrentGenID-1].generatorsBought++;
-            data.genList[CurrentGenID-1].generatorAmount++;
+            data.currency -= data.genList[CurrentGenID].generatorCost;
+            data.genList[0].generatorsBought++;
+            data.genList[0].generatorAmount++;
+            BigDouble previousBase = 10 * (2 * CurrentGenID);
+            data.genList[CurrentGenID].generatorCost = (previousBase * 2) * Pow(1.25, data.genList[CurrentGenID].generatorsBought);
+            if (data.genList[CurrentGenID].generatorAmount >= 5)
+                CurrentDisplayGenID++;
+            print(data.genList[1].generatorAmount);
+            print(data.genList[2].generatorAmount);
+            
             UpdateTexts();
-            BigDouble previousBase = 10 * (2 * CurrentGenID-1);
-            data.genList[CurrentGenID-1].generatorCost = (previousBase * 2) * Pow(1.25, data.genList[CurrentGenID-1].generatorsBought);
-            print("bought gen1");
         }
     }
 }

@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour
     {
         Save();
         yield return new WaitForSecondsRealtime(10);
-        print("saved");
+        //print("saved");
         StartCoroutine(SaveClock());
     }
 }

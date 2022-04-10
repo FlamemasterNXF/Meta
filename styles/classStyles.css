@@ -1,0 +1,46 @@
+.flexBox {
+    display: flex;
+    align-items: center;
+    place-content:center
+}
+.generalTexts{
+    color: white;
+    font-family: DosisLight;
+}
+.centeredTexts{
+    color: white;
+    font-family: DosisLight;
+    text-align: center;
+}
+.layer{
+    position: absolute;
+    z-index: 1;
+}
+.cubeDisplay{
+    color: white;
+    font-family: DosisSemiBold;
+    border: 2px solid darkred;
+    height: 100px;
+    width: 250px;
+    background-color: black;
+    margin-top: 10px;
+}
+.cubeCompact{
+    color: white;
+    font-family: DosisSemiBold;
+    border: 2px solid darkred;
+    height: 80px;
+    width: 120px;
+    background-color: black;
+    margin-top: 10px;
+}
+.techRow{
+    margin-top: 30px;
+}
+.tech{
+    width: 95px;
+    height: 80px;
+    background-color: black;
+    border: 2px solid green;
+    color: white;
+}
